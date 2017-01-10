@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hncu.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.hncu.model.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="createdatetime" property="createdatetime" jdbcType="TIMESTAMP"/>
+        <result column="modifydatetime" property="modifydatetime" jdbcType="TIMESTAMP"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="update_time" property="updateTime" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, createdatetime, modifydatetime, name, pwd, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tuser
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tuser
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="cn.hncu.model.User">
+    insert into tuser (id, createdatetime, modifydatetime, 
+      name, pwd, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{createdatetime,jdbcType=TIMESTAMP}, #{modifydatetime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updateTime,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.hncu.model.User">
+        insert into tuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="createdatetime != null">
+                createdatetime,
+            </if>
+            <if test="modifydatetime != null">
+                modifydatetime,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="pwd != null">
+                pwd,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="createdatetime != null">
+                #{createdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifydatetime != null">
+                #{modifydatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.hncu.model.User">
+        update tuser
+        <set>
+            <if test="createdatetime != null">
+                createdatetime = #{createdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifydatetime != null">
+                modifydatetime = #{modifydatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                pwd = #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.hncu.model.User">
+    update tuser
+    set createdatetime = #{createdatetime,jdbcType=TIMESTAMP},
+      modifydatetime = #{modifydatetime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!--最终配置，user中直接用role角色表
+        传入的类型:parameterType
+        返回的类型:resultType-结果类型
+    -->
+    <!-- ofType表示list中的每一个对象的类型
+        extends表示继承哪个！！！
+        type 的值表示封装成哪个Java对象，返回值的全限定类名，或类型别名。
+        -->
+    <resultMap id="userResultMap" type="cn.hncu.model.User" extends="BaseResultMap">
+        <!--property值和Role的那个List<Role>的名对上
+          column -通过id(这个是查询语句中的id)去查
+          -查出来的类型是javaType(list)
+          因为是List，所以添加collection
+          如果是对象，添加association
+        -->
+        <collection property="roles" javaType="list" ofType="cn.hncu.model.Role">
+            <!--Role的属性
+               property="id" 这里的id就是Role的id
+               column表示你在(SQL)select语句返回中叫的名字- 有重复的一定要起别名
+           -->
+            <id property="id" column="role_id"></id>
+            <result property="text" column="role_text"></result>
+        </collection>
+    </resultMap>
+
+    <!-- resultType有map和list
+        resultMap和resultType只能选一个
+        -->
+    <select id="getAllUser" resultMap="userResultMap">
+        SELECT
+        tuser.id,
+        tuser.createdatetime,
+        tuser.modifydatetime,
+        tuser.`name`,
+        tuser.pwd,
+        tuser.create_time,
+        tuser.update_time,
+        tuser_trole.id,
+        tuser_trole.role_id,
+        tuser_trole.user_id,
+        trole.id role_id,
+        trole.text role_text
+        FROM
+        tuser
+        INNER JOIN tuser_trole ON tuser_trole.user_id = tuser.id
+        INNER JOIN trole ON tuser_trole.role_id = trole.id
+    </select>
+
+</mapper>
