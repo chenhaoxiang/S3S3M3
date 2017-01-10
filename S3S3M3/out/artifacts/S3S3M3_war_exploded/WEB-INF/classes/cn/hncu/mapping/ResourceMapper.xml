@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hncu.dao.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="cn.hncu.model.Resource" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="DECIMAL" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, seq, text, url, pid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tresource
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tresource
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.hncu.model.Resource" >
+    insert into tresource (id, seq, text, 
+      url, pid)
+    values (#{id,jdbcType=VARCHAR}, #{seq,jdbcType=DECIMAL}, #{text,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hncu.model.Resource" >
+    insert into tresource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hncu.model.Resource" >
+    update tresource
+    <set >
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=DECIMAL},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hncu.model.Resource" >
+    update tresource
+    set seq = #{seq,jdbcType=DECIMAL},
+      text = #{text,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
