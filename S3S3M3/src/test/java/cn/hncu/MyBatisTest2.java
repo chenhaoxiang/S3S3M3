@@ -78,5 +78,4 @@ public class MyBatisTest2 {
         logger.info(JSON.toJSONStringWithDateFormat(allUser,"yyyy-MM-dd HH:mm:ss"));
     }
 
-
 }

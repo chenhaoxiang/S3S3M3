@@ -1,0 +1,5 @@
+2017-01-10 17:28:49,911 ERROR [cn.hncu.MyBatisTest2.testGetUser(MyBatisTest2.java:51)]:错误信息======================================================== -main
+2017-01-10 18:15:23,313 ERROR [cn.hncu.MyBatisTest2.testGetUser(MyBatisTest2.java:51)]:错误信息======================================================== -main
+2017-01-10 18:20:58,039 ERROR [cn.hncu.MyBatisTest2.testGetUser(MyBatisTest2.java:52)]:错误信息======================================================== -main
+2017-01-10 18:22:38,091 ERROR [cn.hncu.MyBatisTest2.testGetUser(MyBatisTest2.java:54)]:错误信息======================================================== -main
+2017-01-10 18:52:53,344 ERROR [cn.hncu.MyBatisTest2.testGetUser(MyBatisTest2.java:57)]:错误信息======================================================== -main

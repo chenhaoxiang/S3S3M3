@@ -16,7 +16,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
     /**
      * 获得所有用户
      * @return

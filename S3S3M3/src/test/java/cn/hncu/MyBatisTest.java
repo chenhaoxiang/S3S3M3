@@ -53,4 +53,16 @@ public class MyBatisTest {
         System.out.println("userName:"+user.getName());
     }
 
+    /**
+     * 测试定时任务的执行
+     * @throws InterruptedException
+     */
+    @Test
+    public void testTask() throws InterruptedException {
+        System.out.println("开始执行了...");
+        Thread.sleep(1000000);
+        System.out.println("结束执行了...");
+    }
+
 }
+;

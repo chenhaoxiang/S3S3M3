@@ -27,6 +27,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="S3S3M3" target="1.5" />
+      <module name="S3S3M3FinalVersion" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
